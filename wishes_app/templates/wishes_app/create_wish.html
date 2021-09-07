@@ -1,0 +1,46 @@
+{% extends "login_app/base.html"%}
+{% load static %}
+
+{% block title %}Wishes Resume{% endblock %}
+
+{% block content %}
+<div class="container">
+     <div class="row">
+          <div class="col col-sm-12 col-md-8">
+          </div>
+          <div class="col col-sm-12 col-md-4">
+               <h4><a href="/dashboard">Home</a></h4>
+               <h4><a href="/login/logout">Logout</a></h4>
+          </div>
+     </div>
+     <div class="row">
+          <h4>Create a New Wish List Item</h4>
+          <form action="/dashboard/create_wish" method="POST">
+               {% csrf_token %}
+               <label for="article">Item/Products</label>
+               <input type="text" class="form-control" name="article" id="article" maxlength=100 required>
+               <input type="submit" value="Add">
+          </form>
+
+     </div>
+     {% if messages %}
+     <div class="card border-danger mt-3">
+          <div class="card-header mb-3">
+               <h3>Registro de usuario</h3>
+          </div>
+          <div class="card-body">
+               <div class="alert {{ request.session.level_mensaje }} alert-dismissible"   role="alert" >
+                    <ul>
+                         {% for message in messages %}
+                              <li><strong>{{ message }}</strong></li>    
+                         {% endfor %}                   
+                    </ul>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert"></button> -->
+               </div>
+          </div>
+     </div>
+     {% endif %}    
+
+</div>
+
+{% endblock %}

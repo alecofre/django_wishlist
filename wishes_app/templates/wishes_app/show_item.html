@@ -1,0 +1,29 @@
+{% extends "login_app/base.html"%}
+{% load static %}
+
+{% block title %}Wishes Resume{% endblock %}
+
+{% block content %}
+
+<div class="container">
+     <div class="row">
+          <div class="col col-sm-12 col-md-8">
+          </div>
+          <div class="col col-sm-12 col-md-4">
+               <h4><a href="/dashboard">Home</a></h4>
+               <h4><a href="/login/logout">Logout</a></h4>
+          </div>
+     </div>
+     <div class="row">
+          <h3> {{ item.article }} </h3>
+          <h4>Users who added this product/item under their wish list</h4>
+          <ul>
+               {% for w in wishers %}
+               <li> {{ w.username }} </li>
+               {% endfor%}
+          </ul>
+     </div>
+
+</div>
+
+{% endblock %}

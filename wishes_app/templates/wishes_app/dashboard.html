@@ -1,0 +1,87 @@
+{% extends "login_app/base.html"%}
+{% load static %}
+
+{% block title %}Wishes Resume{% endblock %}
+
+{% block content %}
+
+<div class="container">
+     <div class="row">
+          {% if request.session.user  %}
+          <div class="col col-sm-12 col-md-8">
+               <h3>Welcome, {{request.session.user.username}} </h3>
+          </div>
+          {% endif %}
+          <div class="col col-sm-12 col-md-4">
+               <h4><a href="/login/logout">Logout</a></h4>
+          </div>
+     </div>
+
+     <div class="row align-center">
+          <h4>You Wish List</h4>
+          <div class="table responsive">
+               <table class='table table-bordered table-striped'>
+                    <thead class='bg-success'>
+                         <tr class='text-center'>
+                              <th>Item</th>
+                              <th>Added by</th>
+                              <th>Date Added</th>
+                              <th>Action</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         {% for i in my_items %}
+                         <tr class='text-center'>
+                              <td> <a href="/wish_items/{{i.id}}">{{i.article}}</a> </td>
+                              <td> {{i.creator.username}} </td>
+                              <td> {{i.created | date:'M d Y'}} </td>
+                                   {% if request.session.user.id == i.creator.id %}
+                                   <td><a href="/dashboard/delete/{{i.id}}">Delete</a></td>
+                                   {% else %}
+                                   <td><a href="/dashboard/remove2MyList/{{i.id}}">Remove from my wishlist</a></td>
+                                   {% endif %}
+                         </tr>
+                         {% endfor %}
+                    </tbody>
+
+               </table>
+          </div>
+
+     </div>
+
+     <div class="row align-center">
+          <h4>Other User's Wish List</h4>
+          <div class="table responsive">
+               <table class='table table-bordered table-striped'>
+                    <thead class='bg-info'>
+                         <tr class='text-center'>
+                              <th>Item</th>
+                              <th>Added by</th>
+                              <th>Date Added</th>
+                              <th>Action</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         {% for i in no_my_items %}
+                         <tr class='text-center'>
+                              <td> <a href="/wish_items/{{i.id}}">{{i.article}}</a> </td>
+                              <td> {{i.creator.username}} </td>
+                              <td> {{i.created | date:'M d Y'}} </td>
+                              <td><a href="/dashboard/add2MyList/{{i.id}}">Add to my wishlist</a></td>
+                         </tr>
+                         {% endfor %}
+                    </tbody>
+               </table>
+          </div>
+
+     </div>
+     <div class="d-md-flex justify-content-md-end">
+          <h3><a href="/wish_items/create">Add item</a></h3>
+
+     </div>
+
+
+</div>
+
+
+{% endblock %}
